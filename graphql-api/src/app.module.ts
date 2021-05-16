@@ -1,12 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { RModule } from './s/r/r.module';
-import { ToDoListsModule } from './to-do-lists/to-do-lists.module';
+import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
-	imports: [RModule, ToDoListsModule],
-	controllers: [AppController],
-	providers: [AppService],
+	imports: [GraphQLModule.forRoot({
+		autoSchemaFile: `${process.cwd()}src/schema.gql`,
+	})]
 })
 export class AppModule {}
