@@ -24,7 +24,6 @@ model Step {
   id                Int         @id @default(autoincrement())
   name              String
   description       String?
-  published         Boolean     @default(false)
   toDoList          ToDoList    @relation(fields: [toDoListId], references: [id])
   toDoListId        Int
   orderInToDoList   Int
