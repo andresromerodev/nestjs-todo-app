@@ -13,32 +13,30 @@ generator client {
 // Models:
 
 model ToDoList {
-  id            Int      @id @default(autoincrement())
-  name          String   @unique
+  id            Int         @id @default(autoincrement())
+  uuid          String      @default(uuid()) @unique
+  name          String      @unique
   description   String?
-  order         Int
-  steps         Step[]
-}
+  tasks         Task[]
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @default(now()) @map("updated_at")
 
-model Step {
-  id                Int         @id @default(autoincrement())
-  name              String
-  description       String?
-  toDoList          ToDoList    @relation(fields: [toDoListId], references: [id])
-  toDoListId        Int
-  orderInToDoList   Int
-  tasks             Task[]
-  state             State       @default(TODO)
+  @@map("t_to_do_lists")
 }
 
 model Task {
   id                Int         @id @default(autoincrement())
+  uuid              String      @default(uuid()) @unique
+  toDoListId        Int         @map("to_do_list_id")
   name              String
   description       String?
   state             State       @default(TODO)
-  step              Step        @relation(fields: [stepId], references: [id])
-  stepId            Int
-  orderInStepList   Int
+  toDoList          ToDoList    @relation(fields: [toDoListId], references: [id])
+  orderInToDoList   Int         @map("order_in_to_do_list")
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @default(now()) @map("updated_at")
+
+  @@map("t_tasks")
 }
 
 // Enums:
