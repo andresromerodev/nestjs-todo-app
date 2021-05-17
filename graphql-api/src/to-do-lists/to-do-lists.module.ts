@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ToDoListsResolver } from './to-do-lists.resolver';
 import { ToDoListsService } from './to-do-lists.service';
+import { ToDoListsResolver } from './to-do-lists.resolver';
 
 @Module({
   providers: [ToDoListsResolver, ToDoListsService]

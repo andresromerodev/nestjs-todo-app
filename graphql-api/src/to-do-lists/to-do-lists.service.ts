@@ -1,16 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../data-access/prisma.service';
-import { ToDoList, Prisma } from '@prisma/client';
+import { CreateToDoListInput } from './dto/create-to-do-list.input';
+import { UpdateToDoListInput } from './dto/update-to-do-list.input';
 
 @Injectable()
 export class ToDoListsService {
-	constructor(private prisma: PrismaService) {}
+  create(createToDoListInput: CreateToDoListInput) {
+    return 'This action adds a new toDoList';
+  }
 
-	async toDoList(
-		toDoListWhereUniqueInput: Prisma.ToDoListWhereUniqueInput,
-	): Promise<ToDoList | null> {
-		return this.prisma.toDoList.findUnique({
-			where: toDoListWhereUniqueInput,
-		});
-	}
+  findAll() {
+    return `This action returns all toDoLists`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} toDoList`;
+  }
+
+  update(id: number, updateToDoListInput: UpdateToDoListInput) {
+    return `This action updates a #${id} toDoList`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} toDoList`;
+  }
 }

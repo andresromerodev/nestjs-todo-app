@@ -14,9 +14,7 @@ generator client {
 
 model ToDoList {
   id            Int         @id @default(autoincrement())
-  uuid          String      @default(uuid()) @unique
   name          String      @unique
-  description   String?
   tasks         Task[]
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @default(now()) @map("updated_at")
@@ -26,13 +24,11 @@ model ToDoList {
 
 model Task {
   id                Int         @id @default(autoincrement())
-  uuid              String      @default(uuid()) @unique
-  toDoListId        Int         @map("to_do_list_id")
-  name              String
-  description       String?
+  toDoListId        Int?        @map("to_do_list_id")
+  description       String
   state             State       @default(TODO)
-  toDoList          ToDoList    @relation(fields: [toDoListId], references: [id])
-  orderInToDoList   Int         @map("order_in_to_do_list")
+  toDoList          ToDoList?   @relation(fields: [toDoListId], references: [id])
+  orderInToDoList   Int?        @map("order_in_to_do_list")
   createdAt         DateTime    @default(now()) @map("created_at")
   updatedAt         DateTime    @default(now()) @map("updated_at")
 
