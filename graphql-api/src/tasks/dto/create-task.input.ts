@@ -9,5 +9,5 @@ export class CreateTaskInput {
   toDoListId: number;
 
   @Field(() => Int)
-  orderInStepList: number;
+  orderInToDoList: number;
 }

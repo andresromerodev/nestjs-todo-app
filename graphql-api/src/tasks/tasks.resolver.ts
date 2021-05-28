@@ -6,7 +6,7 @@ import { UpdateTaskInput } from './dto/update-task.input';
 
 @Resolver(() => Task)
 export class TasksResolver {
-  constructor(private readonly tasksService: TasksService) {}
+  constructor(private readonly tasksService: TasksService) { }
 
   @Mutation(() => Task)
   createTask(@Args('createTaskInput') createTaskInput: CreateTaskInput) {
@@ -20,7 +20,7 @@ export class TasksResolver {
 
   @Query(() => Task, { name: 'task' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.tasksService.findOne(id);
+    return this.tasksService.findOneById(id);
   }
 
   @Mutation(() => Task)

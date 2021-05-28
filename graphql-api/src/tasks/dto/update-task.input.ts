@@ -1,11 +1,19 @@
-import { CreateTaskInput } from './create-task.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { InputType, Field, Int, registerEnumType } from '@nestjs/graphql';
+import { State } from '@prisma/client';
 
 @InputType()
-export class UpdateTaskInput extends PartialType(CreateTaskInput) {
+export class UpdateTaskInput {
   @Field(() => Int)
   id: number;
 
-  @Field()
-  description: string;
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field(() => Int, { nullable: true })
+  orderInToDoList?: number;
+
+  @Field(() => State, { nullable: true })
+  state?: State;
 }
+
+registerEnumType(State, { name: 'State', });
