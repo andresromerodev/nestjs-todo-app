@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Parent, ResolveField } from '@nestjs/graphql';
 import { TasksService } from './tasks.service';
 import { Task } from './entities/task.entity';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
+import { ToDoList } from 'src/to-do-lists/entities/to-do-list.entity';
 
 @Resolver(() => Task)
 export class TasksResolver {
@@ -32,4 +33,5 @@ export class TasksResolver {
   removeTask(@Args('id', { type: () => Int }) id: number) {
     return this.tasksService.remove(id);
   }
+
 }

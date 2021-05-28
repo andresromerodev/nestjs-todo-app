@@ -17,8 +17,8 @@ export class Task {
   @Field(() => ToDoList, { nullable: true })
   toDoList?: ToDoList;
 
-  @Field(() => Int)
-  orderInStepList: number;
+  @Field(() => Int, { nullable: true })
+  orderInToDoList?: number;
 
   @Field(() => Date)
   createdAt: Date

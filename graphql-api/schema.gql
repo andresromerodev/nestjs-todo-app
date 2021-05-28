@@ -7,7 +7,7 @@ type Task {
   description: String
   state: State!
   toDoList: ToDoList
-  orderInStepList: Int!
+  orderInToDoList: Int
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -55,7 +55,7 @@ input CreateToDoListInput {
 input CreateTaskInput {
   description: String
   toDoListId: Int
-  orderInStepList: Int!
+  orderInToDoList: Int!
 }
 
 input UpdateToDoListInput {
@@ -65,8 +65,8 @@ input UpdateToDoListInput {
 }
 
 input UpdateTaskInput {
-  description: String!
-  toDoListId: Int
-  orderInStepList: Int
   id: Int!
+  description: String
+  orderInToDoList: Int
+  state: State
 }
