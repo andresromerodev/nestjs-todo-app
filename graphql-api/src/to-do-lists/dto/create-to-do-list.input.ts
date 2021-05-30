@@ -1,14 +1,17 @@
-import { InputType, Field } from '@nestjs/graphql';
-import { CreateTaskInput } from '../../tasks/dto/create-task.input';
+import { InputType, Field } from "@nestjs/graphql";
+import { CreateTaskInput } from "../../tasks/dto/create-task.input";
 
 @InputType()
 export class CreateToDoListInput {
-  @Field()
-  email: string
+    @Field()
+    email: string;
 
-  @Field()
-  name: string
+    @Field()
+    name: string;
 
-  @Field(() => [CreateTaskInput], { nullable: true })
-  tasks: [CreateTaskInput]
+    @Field()
+    description?: string;
+
+    @Field(() => [CreateTaskInput], { nullable: true })
+    tasks: [CreateTaskInput];
 }
