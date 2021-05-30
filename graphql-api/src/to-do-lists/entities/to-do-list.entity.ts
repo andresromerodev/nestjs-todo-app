@@ -9,8 +9,8 @@ export class ToDoList {
   @Field()
   name: string;
 
-  @Field(() => [Task])
-  tasks: Task[];
+  @Field(() => [Task], { nullable: true })
+  tasks?: Task[];
 
   @Field(() => Date)
   createdAt: Date
