@@ -8,12 +8,14 @@ import ToDoListTasksScreen from './screens/ToDoListTasksScreen';
 import NotFoundScreen from './components/NotFoundScreen';
 
 import client from './graphql/client';
+import NavigationBar from './components/NavigationBar';
 
 const App = () => {
     return (
         <ApolloProvider client={client}>
             <Router>
                 <Box className='App'>
+                    <NavigationBar />
                     <Switch>
                         <Route path='/' exact component={ToDoListsScreen} />
                         <Route path='/list/:id' exact component={ToDoListTasksScreen} />

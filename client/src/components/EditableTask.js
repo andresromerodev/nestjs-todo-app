@@ -4,7 +4,15 @@ import { ButtonGroup, IconButton } from '@chakra-ui/button';
 import { CheckCircleIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, TimeIcon } from '@chakra-ui/icons';
 import { Editable, EditableInput, EditablePreview, useEditableControls } from '@chakra-ui/editable';
 
-function EditableTask({ description }) {
+function EditableTask({ id, description, state, markTaskAsDone }) {
+    const markDone = () =>
+        markTaskAsDone({
+            variables: {
+                id,
+                state: state === 'DONE' ? 'TODO' : 'DONE',
+            },
+        });
+
     function EditableControls() {
         const { isEditing, getSubmitButtonProps, getCancelButtonProps, getEditButtonProps } = useEditableControls();
 
@@ -15,7 +23,7 @@ function EditableTask({ description }) {
             </ButtonGroup>
         ) : (
             <Flex justifyContent='left'>
-                <IconButton size='sm' margin='2' icon={<CheckCircleIcon />} {...getEditButtonProps()} />
+                <IconButton size='sm' margin='2' icon={<CheckCircleIcon />} onClick={markDone} />
                 <IconButton size='sm' margin='2' icon={<EditIcon />} {...getEditButtonProps()} />
                 <IconButton size='sm' margin='2' icon={<DeleteIcon />} {...getEditButtonProps()} />
                 <IconButton size='sm' margin='2' icon={<TimeIcon />} {...getEditButtonProps()} />
@@ -28,7 +36,7 @@ function EditableTask({ description }) {
             <SimpleGrid columns={2} spacing={5}>
                 <Box height='80px'>
                     <EditableInput />
-                    <EditablePreview />
+                    <EditablePreview textDecoration={state === 'DONE' ? 'line-through' : 'none'} />
                 </Box>
                 <Box height='80px'>
                     <EditableControls />

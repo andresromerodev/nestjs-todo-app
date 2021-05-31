@@ -1,15 +1,19 @@
 import React from 'react';
 
-import { useQuery } from '@apollo/client';
-import { GET_TASKS_BY_TODO_LIST_ID } from '../graphql/queries';
-import { Box, Divider, Heading, ListItem, OrderedList } from '@chakra-ui/layout';
 import EditableTask from '../components/EditableTask';
+import { useMutation, useQuery } from '@apollo/client';
+import { Box, Divider, Heading, ListItem, OrderedList } from '@chakra-ui/layout';
+
+import { GET_TASKS_BY_TODO_LIST_ID, UPDATE_TASK_STATE } from '../graphql/queries';
 
 const ToDoListTasksScreen = ({ location, match }) => {
-    const { id } = match.params;
-    const name = new URLSearchParams(location.search).get('name');
+    const toDoListId = parseInt(match.params.id);
+    const toDoListName = new URLSearchParams(location.search).get('name');
+    const toDoListTasksVars = { variables: { id: toDoListId } };
 
-    const { loading, error, data } = useQuery(GET_TASKS_BY_TODO_LIST_ID(id));
+    const { loading, error, data } = useQuery(GET_TASKS_BY_TODO_LIST_ID, toDoListTasksVars);
+
+    const [markTaskAsDone] = useMutation(UPDATE_TASK_STATE);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error</p>;
@@ -18,16 +22,21 @@ const ToDoListTasksScreen = ({ location, match }) => {
         <Box padding='20'>
             <Box>
                 <Heading color='purple' paddingBottom='10'>
-                    {name}
+                    {toDoListName}
                 </Heading>
             </Box>
 
             <Box>
                 <OrderedList fontSize='2xl'>
-                    {data.tasksByToDoListId.map(({ description }) => (
-                        <ListItem>
+                    {data.tasksByToDoListId.map(({ id, description, state }) => (
+                        <ListItem key={id}>
                             <Divider orientation='horizontal' width='6xl' />
-                            <EditableTask description={description} />
+                            <EditableTask
+                                id={id}
+                                description={description}
+                                state={state}
+                                markTaskAsDone={markTaskAsDone}
+                            />
                         </ListItem>
                     ))}
                 </OrderedList>

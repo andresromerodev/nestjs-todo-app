@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_TODO_LISTS = gql`
-    query GetToDoLists {
+    query {
         toDoLists {
             id
             name
@@ -14,14 +14,25 @@ export const GET_TODO_LISTS = gql`
     }
 `;
 
-export const GET_TASKS_BY_TODO_LIST_ID = (id) => gql`
-    query GetTasksByToDoListId {
-        tasksByToDoListId (id: ${id}) {
+export const GET_TASKS_BY_TODO_LIST_ID = gql`
+    query ($id: Int!) {
+        tasksByToDoListId(id: $id) {
+            id
             state
             description
             orderInToDoList
             createdAt
             updatedAt
+        }
+    }
+`;
+
+export const UPDATE_TASK_STATE = gql`
+    mutation ($id: Int!, $state: State) {
+        updateTask(updateTaskInput: { id: $id, state: $state }) {
+            id
+            state
+            description
         }
     }
 `;
