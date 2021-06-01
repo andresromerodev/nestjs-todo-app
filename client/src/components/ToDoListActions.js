@@ -9,7 +9,7 @@ const ToDoListActions = () => {
                 Create list
             </Button>
             <Button colorScheme='pink' variant='solid' marginRight='5'>
-                Delete list
+                Delete lists
             </Button>
         </Box>
     );
