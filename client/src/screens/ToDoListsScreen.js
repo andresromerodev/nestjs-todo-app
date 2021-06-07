@@ -17,20 +17,18 @@ const ToDoListsScreen = () => {
     if (error) return <p>Error</p>;
 
     return (
-        <Box>
-            <Box padding='10'>
-                <Heading as='h5' paddingBottom='10' color='purple'>
-                    Hi! These are Your TODO Lists
-                </Heading>
+        <Box padding='10'>
+            <Heading as='h5' paddingBottom='10' color='purple'>
+                Hi! These are Your TODO Lists
+            </Heading>
 
-                <ToDoListActions />
+            <ToDoListActions />
 
-                <Wrap direction={['column', 'row']} spacing='20px' marginTop='10'>
-                    {data.toDoLists.map(({ id, name, description, tasks }) => (
-                        <ToDoListCard key={id} id={id} name={name} description={description} tasks={tasks} />
-                    ))}
-                </Wrap>
-            </Box>
+            <Wrap direction={['column', 'row']} spacing='20px' marginTop='10'>
+                {data.toDoLists.map(({ id, name, description, tasks }) => (
+                    <ToDoListCard key={id} id={id} name={name} description={description} tasks={tasks} />
+                ))}
+            </Wrap>
         </Box>
     );
 };

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useToast } from '@chakra-ui/toast';
+import { Spacer, Flex } from '@chakra-ui/layout';
+import TasksActions from '../components/TasksActions';
 import EditableTask from '../components/EditableTask';
 import { useMutation, useQuery } from '@apollo/client';
 import { Box, Divider, Heading, ListItem, OrderedList } from '@chakra-ui/layout';
@@ -55,11 +57,17 @@ const ToDoListTasksScreen = ({ location, match }) => {
     if (error) return <p>Error</p>;
 
     return (
-        <Box padding='20'>
-            <Box>
-                <Heading color='purple' paddingBottom='10'>
-                    {toDoListName}
-                </Heading>
+        <Box padding='10'>
+            <Box w='63%' mb='14'>
+                <Flex>
+                    <Box>
+                        <Heading color='purple'>{toDoListName}</Heading>
+                    </Box>
+                    <Spacer />
+                    <Box>
+                        <TasksActions />
+                    </Box>
+                </Flex>
             </Box>
 
             <Box>
