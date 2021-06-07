@@ -47,12 +47,15 @@ export const UPDATE_TASK_DESCRIPTION = gql`
     }
 `;
 
-// export const DELETE_TASK = gql`
-//     mutation ($id: Int!, $description: String) {
-//         updateTask(updateTaskInput: { id: $id, description: $description }) {
-//             id
-//             state
-//             description
-//         }
-//     }
-// `;
+export const DELETE_TASK = gql`
+    mutation ($id: Int!) {
+        removeTask(id: $id) {
+            id
+            state
+            description
+            orderInToDoList
+            createdAt
+            updatedAt
+        }
+    }
+`;

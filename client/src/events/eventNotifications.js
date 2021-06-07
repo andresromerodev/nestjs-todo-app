@@ -14,6 +14,14 @@ export const onTaskPending = (description) => ({
     isClosable: true,
 });
 
+export const onTaskDelete = (description) => ({
+    title: 'Task Deleted',
+    description: `"${description}" has been removed`,
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+});
+
 export const onError = (error) => ({
     title: 'System Error.',
     description: error.message,

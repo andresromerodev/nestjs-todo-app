@@ -1,51 +1,51 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 const toDoListData: Prisma.ToDoListCreateInput[] = [
     {
-        name: "Shopping List",
-        description: "A supermarket shopping list",
+        name: 'Shopping List',
+        description: 'A supermarket shopping list',
         tasks: {
             create: [
                 {
-                    description: "Buy milk",
+                    description: 'Buy milk',
                     orderInToDoList: 1,
                 },
                 {
-                    description: "Buy cheese",
+                    description: 'Buy cheese',
                     orderInToDoList: 2,
                 },
                 {
-                    description: "Buy bread",
+                    description: 'Buy bread',
                     orderInToDoList: 3,
                 },
                 {
-                    description: "Buy  coffee",
+                    description: 'Buy  coffee',
                     orderInToDoList: 4,
                 },
                 {
-                    description: "Buy chicken",
+                    description: 'Buy chicken',
                     orderInToDoList: 5,
                 },
             ],
         },
     },
     {
-        name: "Learning List",
-        description: "A coding learning list",
+        name: 'Learning List',
+        description: 'A coding learning list',
         tasks: {
             create: [
                 {
-                    description: "Learn NestJS",
+                    description: 'Learn NestJS',
                     orderInToDoList: 1,
                 },
                 {
-                    description: "Learn Prisma",
+                    description: 'Learn Prisma',
                     orderInToDoList: 2,
                 },
                 {
-                    description: "Learn GraphQl",
+                    description: 'Learn GraphQl',
                     orderInToDoList: 3,
                 },
             ],
