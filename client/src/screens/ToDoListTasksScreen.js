@@ -4,7 +4,7 @@ import EditableTask from '../components/EditableTask';
 import { useMutation, useQuery } from '@apollo/client';
 import { Box, Divider, Heading, ListItem, OrderedList } from '@chakra-ui/layout';
 
-import { GET_TASKS_BY_TODO_LIST_ID, UPDATE_TASK_STATE } from '../graphql/queries';
+import { GET_TASKS_BY_TODO_LIST_ID, UPDATE_TASK_STATE, UPDATE_TASK_DESCRIPTION } from '../graphql/queries';
 
 const ToDoListTasksScreen = ({ location, match }) => {
     const toDoListId = parseInt(match.params.id);
@@ -14,6 +14,7 @@ const ToDoListTasksScreen = ({ location, match }) => {
     const { loading, error, data } = useQuery(GET_TASKS_BY_TODO_LIST_ID, toDoListTasksVars);
 
     const [markTaskAsDone] = useMutation(UPDATE_TASK_STATE);
+    const [updateTaskDescription] = useMutation(UPDATE_TASK_DESCRIPTION);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error</p>;
@@ -28,14 +29,17 @@ const ToDoListTasksScreen = ({ location, match }) => {
 
             <Box>
                 <OrderedList fontSize='2xl'>
-                    {data.tasksByToDoListId.map(({ id, description, state }) => (
+                    {data.tasksByToDoListId.map(({ id, description, state, createdAt, updatedAt }) => (
                         <ListItem key={id}>
                             <Divider orientation='horizontal' width='6xl' />
                             <EditableTask
                                 id={id}
                                 description={description}
                                 state={state}
+                                createdAt={createdAt}
+                                updatedAt={updatedAt}
                                 markTaskAsDone={markTaskAsDone}
+                                updateTaskDescription={updateTaskDescription}
                             />
                         </ListItem>
                     ))}

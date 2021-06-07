@@ -7,35 +7,33 @@ import { Task } from './entities/task.entity';
 @Injectable()
 export class TasksService {
 
-  constructor(private prisma: PrismaService) { }
+  constructor(private db: PrismaService) { }
 
   public async create(createTaskInput: CreateTaskInput): Promise<Task> {
-    return this.prisma.task.create({ data: createTaskInput });
+    return this.db.task.create({ data: createTaskInput });
   }
 
   public async findAll(): Promise<Task[]> {
-    return this.prisma.task.findMany();
+    return this.db.task.findMany();
   }
 
   public async findAllByToDoListId(toDoListId: number): Promise<Task[]> {
-    return this.prisma.task.findMany({ where: { toDoListId } });
+    return this.db.task.findMany({ where: { toDoListId } });
   }
 
   public async findOneById(id: number): Promise<Task> {
-    return this.prisma.task.findUnique({ where: { id }, });
+    return this.db.task.findUnique({ where: { id }, });
   }
 
   public async update(id: number, updateTaskInput: UpdateTaskInput): Promise<Task> {
-    return this.prisma.task.update({
-      data: updateTaskInput,
-      where: {
-        id
-      }
+    return this.db.task.update({
+      where: { id },
+      data: updateTaskInput
     });
   }
 
   public async remove(id: number): Promise<Task> {
-    return this.prisma.task.delete({ where: { id } })
+    return this.db.task.delete({ where: { id } })
   }
 
 }

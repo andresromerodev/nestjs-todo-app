@@ -7,30 +7,28 @@ import { ToDoList } from './entities/to-do-list.entity';
 @Injectable()
 export class ToDoListsService {
 
-  constructor(private prisma: PrismaService) { }
+  constructor(private db: PrismaService) { }
 
   public async create(createToDoListInput: CreateToDoListInput): Promise<ToDoList> {
-    return this.prisma.toDoList.create({ data: createToDoListInput });
+    return this.db.toDoList.create({ data: createToDoListInput });
   }
 
   public async findAll(): Promise<ToDoList[]> {
-    return this.prisma.toDoList.findMany();
+    return this.db.toDoList.findMany();
   }
 
   public async findOne(id: number): Promise<ToDoList> {
-    return this.prisma.toDoList.findUnique({ where: { id } });
+    return this.db.toDoList.findUnique({ where: { id } });
   }
 
   public async update(id: number, updateToDoListInput: UpdateToDoListInput): Promise<ToDoList> {
-    return this.prisma.toDoList.update({
-      data: updateToDoListInput,
-      where: {
-        id
-      }
+    return this.db.toDoList.update({
+      where: { id },
+      data: updateToDoListInput
     });
   }
 
   public async remove(id: number): Promise<ToDoList> {
-    return this.prisma.toDoList.delete({ where: { id } });
+    return this.db.toDoList.delete({ where: { id } });
   }
 }
