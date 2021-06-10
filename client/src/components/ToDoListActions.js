@@ -5,10 +5,10 @@ import { Button } from '@chakra-ui/button';
 const ToDoListActions = () => {
     return (
         <Box flex='1'>
-            <Button colorScheme='teal' variant='solid' marginRight='5'>
+            <Button colorScheme='blue' variant='solid' marginRight='5'>
                 Create list
             </Button>
-            <Button colorScheme='pink' variant='solid' marginRight='5'>
+            <Button colorScheme='blue' variant='outline' marginRight='5'>
                 Delete lists
             </Button>
         </Box>

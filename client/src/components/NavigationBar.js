@@ -14,7 +14,7 @@ const NavigationBar = (props) => {
             justify='space-between'
             wrap='wrap'
             padding={6}
-            bg='teal.500'
+            bg='facebook.800'
             color='white'
             {...props}
         >

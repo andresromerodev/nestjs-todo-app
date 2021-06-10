@@ -14,7 +14,7 @@ export const GET_TODO_LISTS = gql`
     }
 `;
 
-export const GET_TASKS_BY_TODO_LIST_ID = gql`
+export const GET_TASKS_BY_TODO_LIST = gql`
     query ($id: Int!) {
         tasksByToDoListId(id: $id) {
             id
@@ -23,6 +23,22 @@ export const GET_TASKS_BY_TODO_LIST_ID = gql`
             orderInToDoList
             createdAt
             updatedAt
+        }
+    }
+`;
+
+export const CREATE_TASK = gql`
+    mutation ($toDoListId: Int, $description: String, $orderInToDoList: Int!) {
+        createTask(
+            createTaskInput: {
+                toDoListId: $toDoListId
+                description: $description
+                orderInToDoList: $orderInToDoList
+            }
+        ) {
+            id
+            state
+            description
         }
     }
 `;

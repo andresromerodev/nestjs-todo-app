@@ -1,14 +1,19 @@
 import React from 'react';
+
 import { useToast } from '@chakra-ui/toast';
-import { Spacer, Flex } from '@chakra-ui/layout';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Spacer, Flex, Box, Divider, Heading, ListItem, OrderedList } from '@chakra-ui/layout';
+
 import TasksActions from '../components/TasksActions';
 import EditableTask from '../components/EditableTask';
-import { useMutation, useQuery } from '@apollo/client';
-import { Box, Divider, Heading, ListItem, OrderedList } from '@chakra-ui/layout';
-import { onError, onTaskDelete, onTaskDone, onTaskPending } from '../events/eventNotifications';
+import CreateTaskModal from '../components/CreateTaskModal';
 
+import { onSuccess, onError, onTaskDelete, onTaskDone, onTaskPending } from '../events/eventNotifications';
+
+import { useMutation, useQuery } from '@apollo/client';
 import {
-    GET_TASKS_BY_TODO_LIST_ID,
+    GET_TASKS_BY_TODO_LIST,
+    CREATE_TASK,
     UPDATE_TASK_STATE,
     UPDATE_TASK_DESCRIPTION,
     DELETE_TASK,
@@ -17,15 +22,19 @@ import {
 const ToDoListTasksScreen = ({ location, match }) => {
     const toDoListId = parseInt(match.params.id);
     const toDoListName = new URLSearchParams(location.search).get('name');
-    const toDoListTasksVars = { variables: { id: toDoListId } };
 
+    // UI Hooks
     const toast = useToast();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
+    // GraphQL Mutation Hooks
     const [markTaskAsDone] = useMutation(UPDATE_TASK_STATE);
+    const [createTask] = useMutation(CREATE_TASK);
     const [updateTaskDescription] = useMutation(UPDATE_TASK_DESCRIPTION);
     const [deleteTask] = useMutation(DELETE_TASK);
 
-    const { loading, error, data, refetch } = useQuery(GET_TASKS_BY_TODO_LIST_ID, toDoListTasksVars);
+    // GraphQL Query Hooks
+    const { loading, error, data } = useQuery(GET_TASKS_BY_TODO_LIST, { variables: { id: toDoListId } });
 
     const done = (id, state, description) => {
         try {
@@ -41,13 +50,44 @@ const ToDoListTasksScreen = ({ location, match }) => {
         }
     };
 
-    const update = (id, description) => updateTaskDescription({ variables: { id, description } });
+    const create = (description) => {
+        try {
+            const orderInToDoList = data.tasksByToDoListId.length + 1;
+            createTask({
+                variables: { toDoListId, description, orderInToDoList },
+                refetchQueries: [
+                    {
+                        query: GET_TASKS_BY_TODO_LIST,
+                        variables: { id: toDoListId },
+                    },
+                ],
+            });
+            toast(onSuccess());
+        } catch (error) {
+            toast(onError);
+        }
+    };
+
+    const update = (id, description) => {
+        try {
+            updateTaskDescription({ variables: { id, description } });
+        } catch (error) {
+            toast(onError);
+        }
+    };
 
     const remove = (id, description) => {
         try {
-            deleteTask({ variables: { id } });
+            deleteTask({
+                variables: { id },
+                refetchQueries: [
+                    {
+                        query: GET_TASKS_BY_TODO_LIST,
+                        variables: { id: toDoListId },
+                    },
+                ],
+            });
             toast(onTaskDelete(description));
-            refetch(); // update cached data
         } catch (error) {
             toast(onError);
         }
@@ -61,15 +101,14 @@ const ToDoListTasksScreen = ({ location, match }) => {
             <Box w='63%' mb='14'>
                 <Flex>
                     <Box>
-                        <Heading color='purple'>{toDoListName}</Heading>
+                        <Heading color='blue.600'>{toDoListName}</Heading>
                     </Box>
                     <Spacer />
                     <Box>
-                        <TasksActions />
+                        <TasksActions onClick={onOpen} />
                     </Box>
                 </Flex>
             </Box>
-
             <Box>
                 <OrderedList fontSize='2xl'>
                     {data.tasksByToDoListId.map(({ id, description, state, createdAt, updatedAt }) => (
@@ -89,6 +128,7 @@ const ToDoListTasksScreen = ({ location, match }) => {
                     ))}
                 </OrderedList>
             </Box>
+            <CreateTaskModal isOpen={isOpen} onClose={onClose} onSave={create} />
         </Box>
     );
 };

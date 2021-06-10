@@ -29,7 +29,7 @@ const ToDoListCard = ({ id, name, description, tasks }) => {
             </StatGroup>
 
             <Link to={`/list/${id}?name=${name}`}>
-                <Button variant='solid' float='right' marginRight='5' marginBottom='5'>
+                <Button float='right' marginRight='5' marginBottom='5'>
                     View list
                 </Button>
             </Link>

@@ -1,3 +1,10 @@
+export const onSuccess = () => ({
+    title: 'Success',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+});
+
 export const onTaskDone = (description) => ({
     title: 'Task Completed.',
     description: `"${description}" marked as DONE.`,

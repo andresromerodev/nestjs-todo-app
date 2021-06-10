@@ -18,7 +18,7 @@ const ToDoListsScreen = () => {
 
     return (
         <Box padding='10'>
-            <Heading as='h5' paddingBottom='10' color='purple'>
+            <Heading as='h5' paddingBottom='10' color='blue.600'>
                 Hi! These are Your TODO Lists
             </Heading>
 
